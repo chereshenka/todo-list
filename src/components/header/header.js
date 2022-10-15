@@ -1,5 +1,5 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
+import { Component } from "react";
+import PropTypes from "prop-types";
 
 export default class Header extends Component {
   static propTypes = {
@@ -7,7 +7,7 @@ export default class Header extends Component {
   };
 
   state = {
-    description: '',
+    description: "",
   };
 
   onLabelChange = (e) => {
@@ -19,12 +19,13 @@ export default class Header extends Component {
   onSubmit = (e) => {
     const { onItemAdd } = this.props;
     const { description } = this.state;
-
     e.preventDefault();
-    onItemAdd(description);
-    this.setState({
-      description: '',
-    });
+    if (description !== "") {
+      onItemAdd(description);
+      this.setState({
+        description: "",
+      });
+    }
   };
 
   render() {
