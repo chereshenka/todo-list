@@ -1,8 +1,8 @@
-import { Component } from 'react';
+import { Component } from "react";
 
-import Header from '../header';
-import TaskList from '../task-list';
-import Footer from '../footer';
+import Header from "../header";
+import TaskList from "../task-list";
+import Footer from "../footer";
 
 export default class App extends Component {
   constructor() {
@@ -10,20 +10,22 @@ export default class App extends Component {
     this.maxId = 100;
     this.state = {
       todoData: [
-        this.createTodoItem('Drink Coffee'),
-        this.createTodoItem('Make App'),
-        this.createTodoItem('Have a lunch'),
+        this.createTodoItem("Drink Coffee"),
+        this.createTodoItem("Make App"),
+        this.createTodoItem("Have a lunch"),
       ],
-      filter: 'all',
+      filter: "all",
     };
   }
-  
-  createTodoItem(description) {
+
+  createTodoItem(description, min, sec) {
     return {
       description,
       completed: false,
-      id: this.maxId++,
+      partNum: this.maxId++,
       date: Date.now(),
+      min: +min || 0,
+      sec: +sec || 0,
     };
   }
 
@@ -37,13 +39,14 @@ export default class App extends Component {
   onToggleDone = (id) => {
     this.setState(({ todoData }) => {
       return {
-        todoData: this.toggleProperty(todoData, id, 'completed'),
+        todoData: this.toggleProperty(todoData, id, "completed"),
       };
     });
   };
 
-  addItem = (text) => {
-    const newItem = this.createTodoItem(text);
+  addItem = (text, min, sec) => {
+    console.log("active");
+    const newItem = this.createTodoItem(text, min, sec);
 
     this.setState(({ todoData }) => {
       const newArr = [...todoData, newItem];
@@ -76,20 +79,23 @@ export default class App extends Component {
 
   render() {
     const { todoData, filter } = this.state;
-    const taskNotCompletedCount = this.state.todoData.filter((el) => !el.completed).length;
+    const taskNotCompletedCount = this.state.todoData.filter(
+      (el) => !el.completed
+    ).length;
+    console.log(todoData);
     return (
       <section className="todoapp">
-        <Header onItemAdd={this.addItem} />
+        <Header onItemAdd={this.addItem} setTimer={this.setUserTime} />
         <section className="main">
           <TaskList
             todos={todoData.filter((el) => {
-              if (filter === 'active') {
+              if (filter === "active") {
                 return !el.completed;
               }
-              if (filter === 'all') {
+              if (filter === "all") {
                 return el;
               }
-              if (filter === 'completed') {
+              if (filter === "completed") {
                 return el.completed;
               }
               return el;
@@ -98,7 +104,11 @@ export default class App extends Component {
             onToggle={this.onToggleDone}
           />
         </section>
-        <Footer onFilter={this.filterSetState} taskToComplete={taskNotCompletedCount} clearAll={this.clearCompleted} />
+        <Footer
+          onFilter={this.filterSetState}
+          taskToComplete={taskNotCompletedCount}
+          clearAll={this.clearCompleted}
+        />
         {/* <button >button</button> */}
       </section>
     );
