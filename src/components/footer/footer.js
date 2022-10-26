@@ -1,6 +1,6 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-import TasksFilter from '../tasks-filter';
+import TasksFilter from "../tasks-filter";
 
 const Footer = ({ onFilter, taskToComplete, clearAll }) => {
   Footer.propTypes = {

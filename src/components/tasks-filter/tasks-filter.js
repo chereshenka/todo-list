@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 const TasksFilter = ({ onFilter }) => {
   TasksFilter.propTypes = {
@@ -8,15 +8,15 @@ const TasksFilter = ({ onFilter }) => {
   return (
     <ul className="filters">
       <li>
-        <button className="selected" onClick={() => onFilter('all')}>
+        <button className="selected" onClick={() => onFilter("all")}>
           All
         </button>
       </li>
       <li>
-        <button onClick={() => onFilter('active')}>Active</button>
+        <button onClick={() => onFilter("active")}>Active</button>
       </li>
       <li>
-        <button onClick={() => onFilter('completed')}>Completed</button>
+        <button onClick={() => onFilter("completed")}>Completed</button>
       </li>
     </ul>
   );

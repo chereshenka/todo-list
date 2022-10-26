@@ -1,8 +1,8 @@
-import { Component } from 'react';
+import { Component } from "react";
 
-import Header from '../header';
-import TaskList from '../task-list';
-import Footer from '../footer';
+import Header from "../header";
+import TaskList from "../task-list";
+import Footer from "../footer";
 
 export default class App extends Component {
   constructor() {
@@ -10,14 +10,14 @@ export default class App extends Component {
     this.maxId = 100;
     this.state = {
       todoData: [
-        this.createTodoItem('Drink Coffee'),
-        this.createTodoItem('Make App'),
-        this.createTodoItem('Have a lunch'),
+        this.createTodoItem("Drink Coffee"),
+        this.createTodoItem("Make App"),
+        this.createTodoItem("Have a lunch"),
       ],
-      filter: 'all',
+      filter: "all",
     };
   }
-  
+
   createTodoItem(description) {
     return {
       description,
@@ -37,7 +37,7 @@ export default class App extends Component {
   onToggleDone = (id) => {
     this.setState(({ todoData }) => {
       return {
-        todoData: this.toggleProperty(todoData, id, 'completed'),
+        todoData: this.toggleProperty(todoData, id, "completed"),
       };
     });
   };
@@ -76,20 +76,22 @@ export default class App extends Component {
 
   render() {
     const { todoData, filter } = this.state;
-    const taskNotCompletedCount = this.state.todoData.filter((el) => !el.completed).length;
+    const taskNotCompletedCount = this.state.todoData.filter(
+      (el) => !el.completed
+    ).length;
     return (
       <section className="todoapp">
         <Header onItemAdd={this.addItem} />
         <section className="main">
           <TaskList
             todos={todoData.filter((el) => {
-              if (filter === 'active') {
+              if (filter === "active") {
                 return !el.completed;
               }
-              if (filter === 'all') {
+              if (filter === "all") {
                 return el;
               }
-              if (filter === 'completed') {
+              if (filter === "completed") {
                 return el.completed;
               }
               return el;
@@ -98,8 +100,11 @@ export default class App extends Component {
             onToggle={this.onToggleDone}
           />
         </section>
-        <Footer onFilter={this.filterSetState} taskToComplete={taskNotCompletedCount} clearAll={this.clearCompleted} />
-        {/* <button >button</button> */}
+        <Footer
+          onFilter={this.filterSetState}
+          taskToComplete={taskNotCompletedCount}
+          clearAll={this.clearCompleted}
+        />
       </section>
     );
   }
