@@ -69,6 +69,8 @@ export default class Task extends Component {
   render() {
     const { description, completed, date, onLabel, onDelete } = this.props;
     const id = this.props.partNum;
+
+    console.log(this.props);
     return (
       <div className="view">
         <input
