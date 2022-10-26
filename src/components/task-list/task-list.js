@@ -21,11 +21,11 @@ export default class TaskList extends Component {
         classNames += " completed";
       }
       return (
-        <li key={this.props.partNum} className={classNames}>
+        <li key={el.partNum} className={classNames}>
           <Task
             {...itemProps}
-            onDelete={() => onDelete(this.props.partNum)}
-            onLabel={() => onToggle(this.props.partNum)}
+            onDelete={() => onDelete(el.partNum)}
+            onLabel={() => onToggle(el.partNum)}
           />
           <input type="text" className="edit" placeholder="Editing task" />
         </li>
