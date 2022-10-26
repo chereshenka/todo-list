@@ -45,7 +45,6 @@ export default class App extends Component {
   };
 
   addItem = (text, min, sec) => {
-    console.log("active");
     const newItem = this.createTodoItem(text, min, sec);
 
     this.setState(({ todoData }) => {
