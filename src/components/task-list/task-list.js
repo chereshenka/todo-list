@@ -14,19 +14,18 @@ export default class TaskList extends Component {
     const { todos, onDelete, onToggle } = this.props;
 
     const elements = todos.map((el) => {
-      const { id, ...itemProps } = el;
+      const { ...itemProps } = el;
 
       let classNames = "";
       if (el.completed) {
         classNames += " completed";
       }
-
       return (
-        <li key={id} className={classNames}>
+        <li key={this.props.partNum} className={classNames}>
           <Task
             {...itemProps}
-            onDelete={() => onDelete(id)}
-            onLabel={() => onToggle(id)}
+            onDelete={() => onDelete(this.props.partNum)}
+            onLabel={() => onToggle(this.props.partNum)}
           />
           <input type="text" className="edit" placeholder="Editing task" />
         </li>

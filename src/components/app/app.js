@@ -18,17 +18,19 @@ export default class App extends Component {
     };
   }
 
-  createTodoItem(description) {
+  createTodoItem(description, min, sec) {
     return {
       description,
       completed: false,
-      id: this.maxId++,
+      partNum: this.maxId++,
       date: Date.now(),
+      min: +min || 0,
+      sec: +sec || 0,
     };
   }
 
   toggleProperty = (arr, id, propName) => {
-    const idx = arr.findIndex((el) => el.id === id);
+    const idx = arr.findIndex((el) => el.partNum === id);
     const oldItem = arr[idx];
     const newItem = { ...oldItem, [propName]: !oldItem[propName] };
     return [...arr.slice(0, idx), newItem, ...arr.slice(idx + 1)];
@@ -42,8 +44,9 @@ export default class App extends Component {
     });
   };
 
-  addItem = (text) => {
-    const newItem = this.createTodoItem(text);
+  addItem = (text, min, sec) => {
+    console.log("active");
+    const newItem = this.createTodoItem(text, min, sec);
 
     this.setState(({ todoData }) => {
       const newArr = [...todoData, newItem];
@@ -81,7 +84,7 @@ export default class App extends Component {
     ).length;
     return (
       <section className="todoapp">
-        <Header onItemAdd={this.addItem} />
+        <Header onItemAdd={this.addItem} setTimer={this.setUserTime} />
         <section className="main">
           <TaskList
             todos={todoData.filter((el) => {
