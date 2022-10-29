@@ -69,7 +69,6 @@ export default class Task extends Component {
   render() {
     const { description, completed, date, onLabel, onDelete } = this.props;
     const id = this.props.partNum;
-    console.log(this.props);
     // this.setState({ min: this.props.min });
     return (
       <div className="view">
