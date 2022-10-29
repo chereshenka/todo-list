@@ -73,20 +73,29 @@ export default class Header extends Component {
             value={description}
           />
           <input
-            type="text"
+            type="number"
             form="new-task"
             maxLength="2"
             className="new-todo-form__timer"
             placeholder="Min"
+            min={0}
+            max={59}
+            required
+            pattern="/\d+/"
+            inputMode="numeric"
             onChange={this.getMinutes}
             value={min}
           />
           <input
-            type="text"
+            type="number"
             form="new-task"
             maxLength="2"
             className="new-todo-form__timer"
             placeholder="Sec"
+            min={0}
+            max={60}
+            required
+            pattern="/\d+/"
             onChange={this.getSeconds}
             value={sec}
           />

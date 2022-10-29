@@ -30,7 +30,6 @@ export default class App extends Component {
   }
 
   toggleProperty = (arr, id, propName) => {
-    console.log(arr, id, propName);
     const idx = arr.findIndex((el) => el.partNum === id);
     const oldItem = arr[idx];
     const newItem = { ...oldItem, [propName]: !oldItem[propName] };
@@ -46,7 +45,6 @@ export default class App extends Component {
   };
 
   addItem = (text, min, sec) => {
-    console.log("active");
     const newItem = this.createTodoItem(text, min, sec);
 
     this.setState(({ todoData }) => {
@@ -67,7 +65,7 @@ export default class App extends Component {
 
   deleteItem = (id) => {
     this.setState(({ todoData }) => {
-      const idx = todoData.findIndex((el) => el.id === id);
+      const idx = todoData.findIndex((el) => el.partNum === id);
 
       const newArr = [...todoData.slice(0, idx), ...todoData.slice(idx + 1)];
       return { todoData: newArr };
@@ -83,23 +81,23 @@ export default class App extends Component {
     const taskNotCompletedCount = this.state.todoData.filter(
       (el) => !el.completed
     ).length;
-    console.log(todoData);
+
     return (
       <section className="todoapp">
         <Header onItemAdd={this.addItem} setTimer={this.setUserTime} />
         <section className="main">
           <TaskList
             todos={todoData.filter((el) => {
-              if (filter === "active") {
-                return !el.completed;
+              if (filter !== "all") {
+                if (filter === "active") {
+                  return !el.completed;
+                }
+
+                if (filter === "completed") {
+                  return el.completed;
+                }
               }
-              if (filter === "all") {
-                return el;
-              }
-              if (filter === "completed") {
-                return el.completed;
-              }
-              return el;
+              return todoData;
             })}
             onDelete={this.deleteItem}
             onToggle={this.onToggleDone}
