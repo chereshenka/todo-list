@@ -82,23 +82,18 @@ export default class App extends Component {
       (el) => !el.completed
     ).length;
 
+    const filtered =
+      filter === "all"
+        ? todoData
+        : todoData.filter((el) =>
+            filter === "completed" ? el.completed : !el.completed
+          );
     return (
       <section className="todoapp">
         <Header onItemAdd={this.addItem} setTimer={this.setUserTime} />
         <section className="main">
           <TaskList
-            todos={todoData.filter((el) => {
-              if (filter !== "all") {
-                if (filter === "active") {
-                  return !el.completed;
-                }
-
-                if (filter === "completed") {
-                  return el.completed;
-                }
-              }
-              return todoData;
-            })}
+            todos={filtered}
             onDelete={this.deleteItem}
             onToggle={this.onToggleDone}
           />
@@ -108,7 +103,6 @@ export default class App extends Component {
           taskToComplete={taskNotCompletedCount}
           clearAll={this.clearCompleted}
         />
-        {/* <button >button</button> */}
       </section>
     );
   }

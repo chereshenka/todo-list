@@ -23,7 +23,6 @@ export default class Task extends Component {
   };
   componentDidMount() {
     const { min, sec } = this.props;
-    console.log(min, "minute", sec, "second");
     this.setState({
       min: min,
       sec: sec,
@@ -32,7 +31,7 @@ export default class Task extends Component {
   }
 
   componentWillUnmount() {
-    clearInterval(this.interval);
+    clearInterval(this.state.timer);
   }
 
   degreeseTimer = () => {
@@ -69,8 +68,6 @@ export default class Task extends Component {
   render() {
     const { description, completed, date, onLabel, onDelete } = this.props;
     const id = this.props.partNum;
-    console.log(this.props);
-    // this.setState({ min: this.props.min });
     return (
       <div className="view">
         <input

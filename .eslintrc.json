@@ -20,12 +20,14 @@
   },
   "plugins": ["react", "prettier", "import"],
   "rules": {
-    "indent": ["error", 2],
+    "indent": "off",
     "prettier/prettier": ["error",{
-      "endOfLine":"auto"
+      "endOfLine":"auto",
+      "trailingComma":"none"
     }],
     "linebreak-style": [0, "unix"],
     "quotes": ["error", "double"],
+    "comma-dangle": ["error", "never"],
     "semi": ["error", "always"],
     "react/react-in-jsx-scope": "off",
     "react/prop-types": 0,

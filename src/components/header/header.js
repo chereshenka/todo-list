@@ -37,17 +37,15 @@ export default class Header extends Component {
   onSubmit = (e) => {
     const { onItemAdd } = this.props;
     const { description, min, sec } = this.state;
-    if (e.key === "Enter") {
-      if (description && min && sec) {
-        e.preventDefault();
-        if (description !== "") {
-          onItemAdd(description, min, sec);
-          this.setState({
-            description: "",
-            min: "",
-            sec: "",
-          });
-        }
+    if (description && min && sec) {
+      e.preventDefault();
+      if (description !== "") {
+        onItemAdd(description, min, sec);
+        this.setState({
+          description: "",
+          min: "",
+          sec: "",
+        });
       }
     }
   };
@@ -57,11 +55,7 @@ export default class Header extends Component {
     return (
       <header className="header">
         <h1>todos</h1>
-        <form
-          id="new-task"
-          className="new-todo-form"
-          onKeyPress={this.onSubmit}
-        >
+        <form id="new-task" className="new-todo-form" onSubmit={this.onSubmit}>
           <input
             type="text"
             form="new-task"
@@ -96,9 +90,11 @@ export default class Header extends Component {
             max={60}
             required
             pattern="/\d+/"
+            inputMode="numeric"
             onChange={this.getSeconds}
             value={sec}
           />
+          <button type="submit" style={{ display: "none" }}></button>
         </form>
       </header>
     );
