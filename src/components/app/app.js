@@ -13,9 +13,9 @@ export default class App extends Component {
         this.createTodoItem("Drink Coffee"),
         this.createTodoItem("Make App"),
         this.createTodoItem("Have a lunch"),
-        this.createTodoItem("test", 1, 1),
+        this.createTodoItem("test", 1, 1)
       ],
-      filter: "all",
+      filter: "all"
     };
   }
 
@@ -27,7 +27,7 @@ export default class App extends Component {
       date: Date.now(),
       min: +min || 0,
       sec: +sec || 0,
-      fullTime: min * 60 + sec,
+      fullTime: min * 60 + sec
     };
   }
 
@@ -39,14 +39,14 @@ export default class App extends Component {
     this.newTimerState([
       ...todoData.slice(0, idx),
       newItem,
-      ...todoData.slice(idx + 1),
+      ...todoData.slice(idx + 1)
     ]);
   };
 
   newTimerState(state) {
     this.setState(() => {
       return {
-        todoData: state,
+        todoData: state
       };
     });
   }
@@ -61,7 +61,7 @@ export default class App extends Component {
   onToggleDone = (id) => {
     this.setState(({ todoData }) => {
       return {
-        todoData: this.toggleProperty(todoData, id, "completed"),
+        todoData: this.toggleProperty(todoData, id, "completed")
       };
     });
   };
@@ -72,7 +72,7 @@ export default class App extends Component {
       const newArr = [...todoData, newItem];
 
       return {
-        todoData: newArr,
+        todoData: newArr
       };
     });
   };

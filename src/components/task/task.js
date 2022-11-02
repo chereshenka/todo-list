@@ -8,22 +8,22 @@ export default class Task extends Component {
     completed: PropTypes.bool,
     date: PropTypes.number,
     onLabel: PropTypes.func,
-    onDelete: PropTypes.func,
+    onDelete: PropTypes.func
   };
 
   static defaultProps = {
-    date: "5 min ago",
+    date: "5 min ago"
   };
 
   state = {
     id: null,
-    timer: null,
+    timer: null
   };
 
   componentDidMount() {
     let { partNum } = this.props;
     this.setState({
-      id: partNum,
+      id: partNum
     });
   }
 
@@ -90,7 +90,7 @@ export default class Task extends Component {
           <span className="created">
             {formatDistanceToNow(date, {
               includeSeconds: true,
-              addSuffix: true,
+              addSuffix: true
             })}
           </span>
         </label>

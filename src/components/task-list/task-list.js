@@ -7,7 +7,7 @@ export default class TaskList extends Component {
   static propTypes = {
     todos: PropTypes.array,
     onDelete: PropTypes.func,
-    onToggle: PropTypes.func,
+    onToggle: PropTypes.func
   };
 
   render() {
