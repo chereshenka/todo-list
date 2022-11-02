@@ -11,7 +11,7 @@ export default class TaskList extends Component {
   };
 
   render() {
-    const { todos, onDelete, onToggle } = this.props;
+    const { todos, onDelete, onToggle, updateTimer } = this.props;
 
     const elements = todos.map((el) => {
       const { ...itemProps } = el;
@@ -26,6 +26,7 @@ export default class TaskList extends Component {
             {...itemProps}
             onDelete={() => onDelete(el.partNum)}
             onLabel={() => onToggle(el.partNum)}
+            timerProps={updateTimer}
           />
           <input type="text" className="edit" placeholder="Editing task" />
         </li>

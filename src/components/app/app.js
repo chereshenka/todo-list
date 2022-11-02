@@ -13,6 +13,7 @@ export default class App extends Component {
         this.createTodoItem("Drink Coffee"),
         this.createTodoItem("Make App"),
         this.createTodoItem("Have a lunch"),
+        this.createTodoItem("test", 1, 1),
       ],
       filter: "all",
     };
@@ -26,7 +27,28 @@ export default class App extends Component {
       date: Date.now(),
       min: +min || 0,
       sec: +sec || 0,
+      fullTime: min * 60 + sec,
     };
+  }
+
+  updateTimeFormTimerTask = (id, min, sec, fullTime) => {
+    const { todoData } = this.state;
+    const idx = todoData.findIndex((el) => el.partNum === id);
+    const oldItem = todoData[idx];
+    const newItem = { ...oldItem, min, sec, fullTime };
+    this.newTimerState([
+      ...todoData.slice(0, idx),
+      newItem,
+      ...todoData.slice(idx + 1),
+    ]);
+  };
+
+  newTimerState(state) {
+    this.setState(() => {
+      return {
+        todoData: state,
+      };
+    });
   }
 
   toggleProperty = (arr, id, propName) => {
@@ -45,8 +67,7 @@ export default class App extends Component {
   };
 
   addItem = (text, min, sec) => {
-    const newItem = this.createTodoItem(text, min, sec);
-
+    const newItem = this.createTodoItem(text, +min, +sec);
     this.setState(({ todoData }) => {
       const newArr = [...todoData, newItem];
 
@@ -96,6 +117,7 @@ export default class App extends Component {
             todos={filtered}
             onDelete={this.deleteItem}
             onToggle={this.onToggleDone}
+            updateTimer={this.updateTimeFormTimerTask}
           />
         </section>
         <Footer

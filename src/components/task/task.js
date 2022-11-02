@@ -16,17 +16,14 @@ export default class Task extends Component {
   };
 
   state = {
-    min: null,
-    sec: null,
-    fullTime: null,
+    id: null,
     timer: null,
   };
+
   componentDidMount() {
-    const { min, sec } = this.props;
+    let { partNum } = this.props;
     this.setState({
-      min: min,
-      sec: sec,
-      fullTime: min * 60 + sec,
+      id: partNum,
     });
   }
 
@@ -35,31 +32,28 @@ export default class Task extends Component {
   }
 
   degreeseTimer = () => {
-    const localTime = this.state.fullTime;
+    let localTime = this.props.fullTime;
     let sec = localTime % 60;
     let min = Math.floor(localTime / 60);
-    this.setState({
-      min,
-      sec,
-    });
-  };
-
-  startTaskTimer = () => {
-    let localTime = this.state.fullTime;
     if (localTime > 0) {
-      this.setState({ fullTime: --localTime });
-      this.degreeseTimer();
+      this.props.timerProps(this.state.id, min, sec, --localTime);
     }
   };
 
   timerControlers = (e) => {
     let button = e.target;
     if (button.className === "icon-timer icon-pause") {
+      this.props.timerProps(
+        this.state.id,
+        this.props.min,
+        this.props.sec,
+        this.props.fullTime
+      );
       this.setState({ timer: clearInterval(this.state.timer) });
     }
     if (button.className === "icon-timer icon-play") {
       if (!this.state.timer) {
-        this.setState({ timer: setInterval(this.startTaskTimer, 1000) });
+        this.setState({ timer: setInterval(this.degreeseTimer, 1000) });
         this.state.timer;
       }
     }
@@ -80,17 +74,17 @@ export default class Task extends Component {
           <span className="description">{description}</span>
           <span className="timer-buttons">
             <button
-              id={id}
+              id={`${id}icon-play`}
               className="icon-timer icon-play"
               onClick={this.timerControlers}
             ></button>
             <button
-              id={id}
+              id={`${id}icon-pause`}
               className="icon-timer icon-pause"
               onClick={this.timerControlers}
             ></button>
             <span className="time">
-              {this.state.min}:{this.state.sec}
+              {this.props.min}:{this.props.sec}
             </span>
           </span>
           <span className="created">
