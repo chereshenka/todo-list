@@ -1,37 +1,28 @@
-import { Component } from "react";
-import PropTypes from "prop-types";
+import {} from "react";
 
 import Task from "../task";
 
-export default class TaskList extends Component {
-  static propTypes = {
-    todos: PropTypes.array,
-    onDelete: PropTypes.func,
-    onToggle: PropTypes.func
-  };
+const TaskList = ({ todos, onDelete, onToggle, updateTimer }) => {
+  const elements = todos.map((el) => {
+    const { ...itemProps } = el;
 
-  render() {
-    const { todos, onDelete, onToggle, updateTimer } = this.props;
+    let classNames = "";
+    if (el.completed) {
+      classNames += " completed";
+    }
+    return (
+      <li key={el.partNum} className={classNames}>
+        <Task
+          {...itemProps}
+          onDelete={() => onDelete(el.partNum)}
+          onLabel={() => onToggle(el.partNum)}
+          timerProps={updateTimer}
+        />
+        <input type="text" className="edit" placeholder="Editing task" />
+      </li>
+    );
+  });
+  return <ul className="todo-list">{elements}</ul>;
+};
 
-    const elements = todos.map((el) => {
-      const { ...itemProps } = el;
-
-      let classNames = "";
-      if (el.completed) {
-        classNames += " completed";
-      }
-      return (
-        <li key={el.partNum} className={classNames}>
-          <Task
-            {...itemProps}
-            onDelete={() => onDelete(el.partNum)}
-            onLabel={() => onToggle(el.partNum)}
-            timerProps={updateTimer}
-          />
-          <input type="text" className="edit" placeholder="Editing task" />
-        </li>
-      );
-    });
-    return <ul className="todo-list">{elements}</ul>;
-  }
-}
+export default TaskList;

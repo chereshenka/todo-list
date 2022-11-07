@@ -6,7 +6,7 @@ const Footer = ({ onFilter, taskToComplete, clearAll }) => {
   Footer.propTypes = {
     onFilter: PropTypes.func,
     taskToComplete: PropTypes.number,
-    clearAll: PropTypes.func,
+    clearAll: PropTypes.func
   };
 
   return (
