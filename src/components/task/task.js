@@ -30,7 +30,6 @@ const Task = ({
   useEffect(() => () => clearInterval(timerTask), [timerTask]);
 
   const degreeseTimer = () => {
-    console.log("tick");
     let sec = localTime % 60;
     let min = Math.floor(localTime / 60);
     if (localTime >= 0) {
@@ -41,13 +40,11 @@ const Task = ({
   const timerControlers = (e) => {
     let button = e.target;
     if (button.className === "icon-timer icon-pause") {
-      console.log("***stop***");
       clearInterval(timerTask);
       setTimerTask(null);
       timerProps(taskDataState.id, min, sec, localTime);
     }
     if (button.className === "icon-timer icon-play") {
-      console.log("***start***");
       if (!timerTask) {
         setTimerTask(setInterval(degreeseTimer, 1000));
         timerTask;

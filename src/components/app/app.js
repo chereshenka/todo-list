@@ -85,12 +85,8 @@ const App = () => {
   };
 
   const deleteItem = (id) => {
-    console.log("***delete***", id);
     const idx = todoData.findIndex((el) => el.partNum === id);
-    console.log("***delete***", idx);
     const newArr = [...todoData.slice(0, idx), ...todoData.slice(idx + 1)];
-
-    console.log("***delete***", newArr);
     setTodoData(newArr);
   };
 
