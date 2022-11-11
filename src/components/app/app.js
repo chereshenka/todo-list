@@ -7,17 +7,37 @@ import Footer from "../footer";
 const App = () => {
   let maxId = 100;
 
-  const initialState = {
-    description: "Time",
-    completed: false,
-    partNum: maxId,
-    date: Date.now(),
-    min: 1,
-    sec: 1,
-    fullTime: 1 * 60 + 1
-  };
+  const initialState = [
+    {
+      description: "Time",
+      completed: false,
+      partNum: maxId,
+      date: Date.now(),
+      min: 1,
+      sec: 1,
+      fullTime: 1 * 60 + 1,
+    },
+    {
+      description: "Sleep",
+      completed: false,
+      partNum: maxId + 101,
+      date: Date.now(),
+      min: 2,
+      sec: 41,
+      fullTime: 2 * 60 + 41,
+    },
+    {
+      description: "Sombrero",
+      completed: false,
+      partNum: maxId + 102,
+      date: Date.now(),
+      min: 7,
+      sec: 3,
+      fullTime: 7 * 60 + 3,
+    },
+  ];
 
-  const [todoData, setTodoData] = useState([initialState]);
+  const [todoData, setTodoData] = useState(initialState);
   const [filter, setFilter] = useState("all");
 
   const createTodoItem = (description, min, sec) => {
@@ -28,24 +48,18 @@ const App = () => {
       date: Date.now(),
       min: +min || 0,
       sec: +sec || 0,
-      fullTime: min * 60 + sec
+      fullTime: min * 60 + sec,
     };
     return item;
   };
 
-  // createTodoItem("Coffee");
-  // createTodoItem("Lunch");
-  // createTodoItem("Sleep");
-
-  // addItem("Time", 1, 1);
-
   const updateTimeFormTimerTask = (id, min, sec, fullTime) => {
     const idx = todoData.findIndex((el) => el.partNum === id);
     const oldItem = todoData[idx];
-    setTodoData([
+    setTodoData((todoData) => [
       ...todoData.slice(0, idx),
       { ...oldItem, min, sec, fullTime },
-      ...todoData.slice(idx + 1)
+      ...todoData.slice(idx + 1),
     ]);
   };
 
@@ -62,7 +76,7 @@ const App = () => {
 
   const addItem = (text, min, sec) => {
     const newItem = createTodoItem(text, +min, +sec);
-    setTodoData((prevData) => [...prevData, newItem]);
+    setTodoData((todoData) => [...todoData, newItem]);
   };
 
   const clearCompleted = () => {
@@ -71,8 +85,12 @@ const App = () => {
   };
 
   const deleteItem = (id) => {
+    console.log("***delete***", id);
     const idx = todoData.findIndex((el) => el.partNum === id);
+    console.log("***delete***", idx);
     const newArr = [...todoData.slice(0, idx), ...todoData.slice(idx + 1)];
+
+    console.log("***delete***", newArr);
     setTodoData(newArr);
   };
 
@@ -85,12 +103,12 @@ const App = () => {
     filter === "all"
       ? todoData
       : todoData.filter((el) =>
-          filter === "completed" ? el.completed : !el.completed
+          filter === "completed" ? el.completed : !el.completed,
         );
 
   return (
     <section className="todoapp">
-      <Header onItemAdd={addItem} /*setTimer={this.setUserTime}*/ />
+      <Header onItemAdd={addItem} />
       <section className="main">
         <TaskList
           todos={filtered}

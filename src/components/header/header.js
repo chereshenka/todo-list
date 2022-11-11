@@ -4,7 +4,7 @@ const Header = ({ onItemAdd }) => {
   const initialState = {
     description: "",
     min: "",
-    sec: ""
+    sec: "",
   };
 
   const [taskData, setTaskData] = useState(initialState);

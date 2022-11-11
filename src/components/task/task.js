@@ -11,26 +11,26 @@ const Task = ({
   fullTime: localTime,
   timerProps,
   min,
-  sec
+  sec,
 }) => {
   const initialState = {
     id: null,
-    date: "5 min ago"
+    date: "5 min ago",
   };
 
   const [taskDataState, setTaskDataState] = useState(initialState);
   const [timerTask, setTimerTask] = useState(null);
 
   useEffect(() => {
-    setTaskDataState({
-      ...taskDataState,
-      id
+    setTaskDataState((taskDataState) => {
+      return { ...taskDataState, id };
     });
   }, [id]);
 
   useEffect(() => () => clearInterval(timerTask), [timerTask]);
 
   const degreeseTimer = () => {
+    console.log("tick");
     let sec = localTime % 60;
     let min = Math.floor(localTime / 60);
     if (localTime >= 0) {
@@ -41,17 +41,19 @@ const Task = ({
   const timerControlers = (e) => {
     let button = e.target;
     if (button.className === "icon-timer icon-pause") {
+      console.log("***stop***");
       clearInterval(timerTask);
+      setTimerTask(null);
       timerProps(taskDataState.id, min, sec, localTime);
     }
     if (button.className === "icon-timer icon-play") {
-      if (!taskDataState.timer) {
+      console.log("***start***");
+      if (!timerTask) {
         setTimerTask(setInterval(degreeseTimer, 1000));
         timerTask;
       }
     }
   };
-
   return (
     <div className="view">
       <input
@@ -80,7 +82,7 @@ const Task = ({
         <span className="created">
           {formatDistanceToNow(date, {
             includeSeconds: true,
-            addSuffix: true
+            addSuffix: true,
           })}
         </span>
       </label>

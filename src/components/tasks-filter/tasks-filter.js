@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 
 const TasksFilter = ({ onFilter }) => {
   TasksFilter.propTypes = {
-    onFilter: PropTypes.func
+    onFilter: PropTypes.func,
   };
 
   return (
