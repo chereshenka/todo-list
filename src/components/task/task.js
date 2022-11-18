@@ -10,15 +10,13 @@ const Task = ({
   partNum: id,
   fullTime: localTime,
   timerProps,
-  min,
-  sec,
 }) => {
-  const initialState = {
-    id: null,
+  const [taskDataState, setTaskDataState] = useState({
+    id: id,
     date: "5 min ago",
-  };
+  });
+  const [totalTime, setTotalTime] = useState(localTime);
 
-  const [taskDataState, setTaskDataState] = useState(initialState);
   const [timerTask, setTimerTask] = useState(null);
 
   useEffect(() => {
@@ -27,14 +25,34 @@ const Task = ({
     });
   }, [id]);
 
+  //update timer or update app state
+  useEffect(() => {
+    if (totalTime) {
+      setTotalTime(totalTime);
+    } else {
+      timerProps(taskDataState.id, 0, 0, totalTime);
+    }
+  }, [totalTime]);
+
+  //update time if unmount task
+  useEffect(() => {
+    return () => {
+      setTotalTime((t) => t);
+    };
+  }, []);
+
   useEffect(() => () => clearInterval(timerTask), [timerTask]);
 
   const degreeseTimer = () => {
-    let sec = localTime % 60;
-    let min = Math.floor(localTime / 60);
-    if (localTime >= 0) {
-      timerProps(taskDataState.id, min, sec, --localTime);
-    }
+    setTotalTime((time) => {
+      if (!time) {
+        clearInterval(timerTask);
+        setTimerTask(null);
+        return time;
+      } else {
+        return time - 1;
+      }
+    });
   };
 
   const timerControlers = (e) => {
@@ -42,7 +60,12 @@ const Task = ({
     if (button.className === "icon-timer icon-pause") {
       clearInterval(timerTask);
       setTimerTask(null);
-      timerProps(taskDataState.id, min, sec, localTime);
+      timerProps(
+        taskDataState.id,
+        Math.floor(totalTime / 60),
+        totalTime % 60,
+        totalTime,
+      );
     }
     if (button.className === "icon-timer icon-play") {
       if (!timerTask) {
@@ -73,7 +96,7 @@ const Task = ({
             onClick={timerControlers}
           ></button>
           <span className="time">
-            {min}:{sec}
+            {Math.floor(totalTime / 60)}:{totalTime % 60}
           </span>
         </span>
         <span className="created">
