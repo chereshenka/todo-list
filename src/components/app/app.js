@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { v4 as uuid } from "uuid";
 
 import Header from "../header";
@@ -25,11 +25,6 @@ const App = () => {
   ]);
   const [filter, setFilter] = useState("all");
 
-  useEffect(() => {
-    setTodoData((todoData) => todoData);
-    // return () => {};
-  }, [todoData]);
-
   const updateTimeFormTimerTask = (id, min, sec, fullTime) => {
     const idx = todoData.findIndex((el) => el.partNum === id);
     const oldItem = todoData[idx];
@@ -44,8 +39,6 @@ const App = () => {
     const idx = arr.findIndex((el) => el.partNum === id);
     const oldItem = arr[idx];
     const newItem = { ...oldItem, [propName]: !oldItem[propName] };
-    console.log(newItem);
-    console.log([...arr.slice(0, idx), newItem, ...arr.slice(idx + 1)]);
     return [...arr.slice(0, idx), newItem, ...arr.slice(idx + 1)];
   };
 
@@ -58,7 +51,7 @@ const App = () => {
   };
 
   const clearCompleted = () => {
-    setTodoData(todoData.filter((el) => !el.completed));
+    setTodoData((todoData) => todoData.filter((el) => !el.completed));
   };
 
   const deleteItem = (id) => {

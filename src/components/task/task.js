@@ -27,9 +27,7 @@ const Task = ({
 
   //update timer or update app state
   useEffect(() => {
-    if (totalTime) {
-      setTotalTime(totalTime);
-    } else {
+    if (!totalTime) {
       timerProps(taskDataState.id, 0, 0, totalTime);
     }
   }, [totalTime]);

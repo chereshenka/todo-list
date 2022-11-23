@@ -3,7 +3,6 @@ import {} from "react";
 import Task from "../task";
 
 const TaskList = ({ todos, onDelete, onToggle, updateTimer }) => {
-  console.log(todos);
   const elements = todos.map((el) => {
     const { ...itemProps } = el;
 
